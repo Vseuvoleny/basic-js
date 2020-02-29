@@ -15,6 +15,7 @@ const map = new Map([
 
 module.exports = function getSeason(date) {
   if (date === undefined) return 'Unable to determine the time of year!';
+
   return map.get(date.getMonth());
   // remove line with error and write your code here
 };
