@@ -14,11 +14,13 @@ const map = [
 ];
 
 module.exports = function getSeason(date) {
-  if (date === undefined) return "Unable to determine the time of year!";
- if (!(date instanceof Date)) {
-    throw new Error ();
-  } 
-    return map[date.getMonth()];
+  if (date === undefined) {
+    return "Unable to determine the time of year!";
+  }
+  if (isNaN(date)) {
+    throw new Error();
+  }
+  return map[date.getMonth()];
 
   // remove line with error and write your code here
 };
