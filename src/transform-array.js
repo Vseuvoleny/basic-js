@@ -1,43 +1,33 @@
 module.exports = function transform(arr) {
   //  throw 'Not implemented';
-  const valuesToRemove = [];
-  arr.forEach((item, index, arr) => {
- 
-      if (item === "--discard-next") {
-        if (index === arr.length - 1) {
-          valuesToRemove[index] = true;
-        } else {
-          valuesToRemove[index] = true;
-          valuesToRemove[index + 1] = true;
-        }
+  if (!Array.isArray(arr)) {
+    throw new Error();
+  } else {
+    let newarr = [];
+    for (let i = 0; i < arr.length; i++) {
+      switch (arr[i]) {
+        case "--discard-next":
+          i++;
+          break;
+        case "--discard-prev":
+          newarr.pop();
+          break;
+        case "--double-prev":
+          if (i - 1 > 0) {
+            arr[i] = arr[i - 1];
+            newarr.push(arr[i]);
+          }
+          break;
+        case "--double-next":
+          if (i + 1 < arr.length) {
+            arr[i] = arr[i + 1];
+            newarr.push(arr[i]);
+          }
+          break;
+        default:
+          newarr.push(arr[i]);
       }
-
-      if (item === "--discard-prev") {
-        if (index === 0) {
-          valuesToRemove[index] = true;
-        } else {
-          valuesToRemove[index] = true;
-          valuesToRemove[index - 1] = true;
-        }
-      }
-
-      if (item === "--double-prev") {
-        if (index === 0) {
-          valuesToRemove[index] = true;
-        } else {
-          arr[index] = arr[index - 1];
-        }
-      }
-
-      if (item === "--double-next") {
-        if (index === arr.length - 1) {
-          valuesToRemove[index] = true;
-        } else {
-          arr[index] = arr[index + 1];
-        }
-      }
-return arr;
-    })
-
-  return arr.filter((item, index) => !valuesToRemove[index]);
+    }
+    return newarr;
+  }
 };
